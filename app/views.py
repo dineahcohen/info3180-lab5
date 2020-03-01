@@ -47,15 +47,21 @@ def login():
             
             if user is not None and check_password_hash(user.password, password):
             # get user id, load into session
-            login_user(user)
+                login_user(user)
 
             # remember to flash a message to the user
-            flash('Successful login!', 'success')
-            return redirect(url_for("secure-page"))  # they should be redirected to a secure-page route instead
+                flash('Successful login!', 'success')
+                return redirect(url_for("secure_page"))  # they should be redirected to a secure-page route instead
         else:
             flash('Username or password is incorrect.', 'error')
     return render_template("login.html", form=form)
 
+
+@app.route('/secure-page')
+@login_required
+def secure_page():
+    """Render the website's secure page."""
+    return render_template('secure_page.html')
 
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
