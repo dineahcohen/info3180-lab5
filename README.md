@@ -1,4 +1,4 @@
-# INFO3180 Lab 4 Starter Code
+# INFO3180 Lab 5 Starter Code
 This is the starter code for Lab 4 which requires you to build a Flask app that does simple file uploads and has basic authentication.
 
 Remember to always create a virtual environment and install the packages in your requirements file
