@@ -4,30 +4,29 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
-from app import app, db, login_manager
-from flask import render_template, request, redirect, url_for, flash
+import os
+from app import app, db
+from flask import render_template, request, redirect, url_for, flash, session, abort
 from flask_login import login_user, logout_user, current_user, login_required
-from app.forms import LoginForm
+from app.forms import ProfileForm
 from app.models import UserProfile
-from werkzeug.security import check_password_hash
-
-###
-# Routing for your application.
-###
+from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.utils import secure_filename
 
 @app.route('/')
 def home():
     """Render website's home page."""
     return render_template('home.html')
 
-
 @app.route('/about/')
 def about():
     """Render the website's about page."""
     return render_template('about.html')
 
+#displays the form to add a new profile 
+@app.route('/profile')
 
+<<<<<<< HEAD
 @app.route("/login", methods=["GET", "POST"])
 def login():
     form = LoginForm()
@@ -56,23 +55,33 @@ def login():
             flash('Username or password is incorrect.', 'error')
     return render_template("login.html", form=form)
 
+=======
+#dislays all user profiles in database
+@app.route('/profiles')
+>>>>>>> 9f3359aa5419236c16a7738ad91b219afdfbaace
 
-@app.route('/secure-page')
-@login_required
-def secure_page():
-    """Render the website's secure page."""
-    return render_template('secure_page.html')
+#viewing an individual user profile by specific user's id
+@app.route('/profile/<userid>')
 
+<<<<<<< HEAD
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader
 def load_user(id):
     return UserProfile.query.get(int(id))
+=======
+>>>>>>> 9f3359aa5419236c16a7738ad91b219afdfbaace
 
-###
 # The functions below should be applicable to all Flask apps.
-###
 
+# Flash errors from the form if validation fails
+def flash_errors(form):
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+), 'danger')
 
 @app.route('/<file_name>.txt')
 def send_text_file(file_name):
